@@ -8,4 +8,23 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DEBUG=1
+      - DEBUG=${DEBUG}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+    env_file:
+      - .env
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    ports:
+      - "5433:5432"
+volumes:
+  pgdata:
