@@ -10,3 +10,5 @@ venv/
 static/
 media/
 node_modules/
+backup.sql
+
